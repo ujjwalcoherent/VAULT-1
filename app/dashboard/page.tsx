@@ -166,23 +166,23 @@ export default function DashboardPage() {
                 <div className="grid grid-cols-2 gap-3">
                   <div className="group rounded-2xl border border-white/[0.08] bg-white/[0.04] p-5 backdrop-blur-md transition-all hover:border-teal-500/30 hover:bg-white/[0.08]">
                     <BarChart3 className="mb-3 size-7 text-teal-400 transition-transform group-hover:scale-110" />
-                    <p className="text-2xl font-bold text-white">{totalReports.toLocaleString()}+</p>
-                    <p className="mt-0.5 text-xs text-slate-500">Research Reports</p>
+                    <p className="text-2xl font-bold text-white">2,500+</p>
+                    <p className="mt-0.5 text-xs text-slate-500">Insights & Newsletters Per Year</p>
                   </div>
                   <div className="group rounded-2xl border border-white/[0.08] bg-white/[0.04] p-5 backdrop-blur-md transition-all hover:border-cyan-500/30 hover:bg-white/[0.08]">
                     <Globe className="mb-3 size-7 text-cyan-400 transition-transform group-hover:scale-110" />
-                    <p className="text-2xl font-bold text-white">26+</p>
-                    <p className="mt-0.5 text-xs text-slate-500">Industry Verticals</p>
+                    <p className="text-2xl font-bold text-white">6,000+</p>
+                    <p className="mt-0.5 text-xs text-slate-500">Projects Till Date</p>
                   </div>
                   <div className="group rounded-2xl border border-white/[0.08] bg-white/[0.04] p-5 backdrop-blur-md transition-all hover:border-blue-500/30 hover:bg-white/[0.08]">
                     <FileText className="mb-3 size-7 text-blue-400 transition-transform group-hover:scale-110" />
-                    <p className="text-2xl font-bold text-white">1,180+</p>
-                    <p className="mt-0.5 text-xs text-slate-500">Full PDF Reports</p>
+                    <p className="text-2xl font-bold text-white">5,000+</p>
+                    <p className="mt-0.5 text-xs text-slate-500">Clients Worldwide</p>
                   </div>
                   <div className="group rounded-2xl border border-white/[0.08] bg-white/[0.04] p-5 backdrop-blur-md transition-all hover:border-sky-500/30 hover:bg-white/[0.08]">
                     <Shield className="mb-3 size-7 text-sky-400 transition-transform group-hover:scale-110" />
-                    <p className="text-2xl font-bold text-white">150+</p>
-                    <p className="mt-0.5 text-xs text-slate-500">Countries Covered</p>
+                    <p className="text-2xl font-bold text-white">450+</p>
+                    <p className="mt-0.5 text-xs text-slate-500">Analysts & Contract Consultants</p>
                   </div>
                 </div>
 
