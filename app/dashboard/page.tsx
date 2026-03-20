@@ -369,7 +369,7 @@ export default function DashboardPage() {
           </div>
 
           {/* Discover Latest Insights — green side */}
-          <div className="flex flex-col items-center justify-center bg-gradient-to-br from-[#5ba829] to-[#4a9122] px-8 py-14 text-center lg:w-[400px] lg:px-10">
+          <div className="flex flex-col items-center justify-center bg-gradient-to-br from-teal-600 to-cyan-700 px-8 py-14 text-center lg:w-[400px] lg:px-10">
             <div className="mb-6 flex items-center gap-3">
               <div className="h-px w-8 bg-white/40" />
               <h2 className="font-serif text-lg font-bold uppercase tracking-widest text-white md:text-xl">
