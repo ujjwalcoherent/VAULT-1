@@ -20,6 +20,14 @@ export const metadata: Metadata = {
   },
   description:
     "Access comprehensive market research reports, trending industry insights, and AI-powered analysis across multiple sectors.",
+  robots: {
+    index: false,
+    follow: false,
+    googleBot: {
+      index: false,
+      follow: false,
+    },
+  },
   icons: {
     icon: [
       {
