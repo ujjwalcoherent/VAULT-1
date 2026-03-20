@@ -1,13 +1,16 @@
 import { NextResponse } from "next/server"
 import { query } from "@/lib/db"
 
-/** Remove broken images (relative paths) but keep all other HTML formatting */
+/** Fix relative image paths to point to coherentmarketinsights.com */
 function sanitizeHtml(html: string): string {
   if (!html) return ""
   return html
-    // Remove img tags with relative src (../images, ./images, images/, etc.)
-    .replace(/<img[^>]*src=["'](?!https?:\/\/)[^"']*["'][^>]*\/?>/gi, "")
-    // For remaining images (absolute URLs), add error handler to hide if broken
+    // Fix relative image src paths — prepend the base URL
+    .replace(
+      /(<img[^>]*src=["'])(\.\.\/|\.\/)?(?!https?:\/\/)([^"']+)(["'])/gi,
+      '$1https://www.coherentmarketinsights.com/$3$4'
+    )
+    // Add responsive styling and error handler to all images
     .replace(/<img /gi, '<img style="max-width:100%;height:auto" onerror="this.style.display=\'none\'" ')
 }
 

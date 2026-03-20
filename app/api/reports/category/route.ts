@@ -67,9 +67,22 @@ export async function GET(request: Request) {
 
     const upcomingRes = await query(upcomingSql, upcomingParams)
 
+    // To Be Published = upcoming reports with different random selection (10 reports)
+    let toBePublishedSql = `SELECT newsid, keyword, catid, forcastyear, createddate, reportstatus
+      FROM cmi_reports WHERE isactive = 1 AND reportstatus = 0`
+    const toBePublishedParams: unknown[] = []
+    if (catId) {
+      toBePublishedSql += ` AND catid = $1`
+      toBePublishedParams.push(Number(catId))
+    }
+    toBePublishedSql += ` ORDER BY RANDOM() LIMIT 10`
+
+    const toBePublishedRes = await query(toBePublishedSql, toBePublishedParams)
+
     return NextResponse.json({
       trending: trendingRows,
       upcoming: upcomingRes.rows,
+      toBePublished: toBePublishedRes.rows,
     })
   } catch (error) {
     console.error("Category reports error:", error)

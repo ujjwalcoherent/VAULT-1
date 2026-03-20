@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button"
 import { categories } from "@/lib/data"
 import {
   TrendingUp, Clock, Search, BarChart3, Globe, FileText,
-  Shield, ArrowRight, X, ShieldCheck, Users, Timer, Target, Award,
+  Shield, ArrowRight, X, ShieldCheck, Users, Timer, Target, Award, BookOpen,
 } from "lucide-react"
 
 const HeroScene = lazy(() =>
@@ -33,6 +33,7 @@ export default function DashboardPage() {
   const router = useRouter()
   const [trendingReports, setTrendingReports] = useState<ReportData[]>([])
   const [upcomingReports, setUpcomingReports] = useState<ReportData[]>([])
+  const [toBePublished, setToBePublished] = useState<ReportData[]>([])
   const [loading, setLoading] = useState(true)
   const [totalReports, setTotalReports] = useState(0)
 
@@ -55,6 +56,7 @@ export default function DashboardPage() {
           const data = await reportsRes.json()
           setTrendingReports(data.trending || [])
           setUpcomingReports(data.upcoming || [])
+          setToBePublished(data.toBePublished || [])
         }
         if (statsRes.ok) {
           const stats = await statsRes.json()
@@ -63,6 +65,7 @@ export default function DashboardPage() {
       } catch {
         setTrendingReports([])
         setUpcomingReports([])
+        setToBePublished([])
       } finally {
         setLoading(false)
       }
@@ -316,9 +319,77 @@ export default function DashboardPage() {
               </div>
               <ReportCarousel reports={upcomingReports} direction="left" />
             </section>
+
+            <section className="mb-14">
+              <div className="mb-6 flex items-center gap-2">
+                <BookOpen className="size-5 text-accent" />
+                <SectionHeader
+                  title="To Be Published"
+                  description="Reports in the pipeline awaiting publication"
+                  align="left"
+                  className="max-w-none"
+                />
+              </div>
+              <ReportCarousel reports={toBePublished} direction="right" />
+            </section>
           </>
         )}
       </div>
+
+      {/* ===== KEY STATS + DISCOVER LATEST INSIGHTS ===== */}
+      <section className="overflow-hidden">
+        <div className="grid lg:grid-cols-[1fr_auto]">
+          {/* Key Stats — dark blue side */}
+          <div className="bg-gradient-to-br from-[#0a1628] via-[#0e2244] to-[#0a1a2e] px-6 py-14 lg:px-12">
+            <div className="mx-auto max-w-3xl">
+              <div className="mb-10 flex items-center gap-4">
+                <div className="h-px flex-1 bg-white/20" />
+                <h2 className="whitespace-nowrap font-serif text-xl font-bold uppercase tracking-widest text-white md:text-2xl">
+                  Key Stats
+                </h2>
+                <div className="h-px flex-1 bg-white/20" />
+              </div>
+              <div className="grid grid-cols-2 gap-8">
+                {[
+                  { icon: "https://www.coherentmarketinsights.com/images/optcmihome-img/keyStatsIcons1.webp", value: "1,200+", label: "Insights Published Per Year" },
+                  { icon: "https://www.coherentmarketinsights.com/images/optcmihome-img/keyStatsIcons2.webp", value: "4,800+", label: "Consulting Projects Still Now" },
+                  { icon: "https://www.coherentmarketinsights.com/images/optcmihome-img/keyStatsIcons3.webp", value: "350+", label: "Analysts and Contract Consultants" },
+                  { icon: "https://www.coherentmarketinsights.com/images/optcmihome-img/keyStatsIcons4.webp", value: "5,150+", label: "Clients Worldwide" },
+                ].map((stat, i) => (
+                  <div key={i} className="flex items-start gap-4">
+                    <img src={stat.icon} alt="" width={48} height={48} loading="lazy" className="mt-1 size-12 object-contain opacity-80" />
+                    <div>
+                      <p className="text-2xl font-bold text-white">{stat.value}</p>
+                      <p className="mt-0.5 text-sm text-slate-400">{stat.label}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Discover Latest Insights — green side */}
+          <div className="flex flex-col items-center justify-center bg-gradient-to-br from-[#5ba829] to-[#4a9122] px-8 py-14 text-center lg:w-[400px] lg:px-10">
+            <div className="mb-6 flex items-center gap-3">
+              <div className="h-px w-8 bg-white/40" />
+              <h2 className="font-serif text-lg font-bold uppercase tracking-widest text-white md:text-xl">
+                Discover Our Latest Insights
+              </h2>
+              <div className="h-px w-8 bg-white/40" />
+            </div>
+            <p className="mb-8 max-w-sm text-sm leading-relaxed text-white/90">
+              For latest market insight related to Healthcare, Chemicals and Materials, ICT, Automation, Semiconductor & Electronics, Aerospace and Defense, Telecom and IT, Consumer Goods and Retail, Energy, Food and Beverages industry, visit.
+            </p>
+            <Button
+              variant="outline"
+              className="rounded-md border-white bg-white px-8 py-2 text-sm font-semibold text-[#0a1628] hover:bg-white/90"
+              onClick={() => router.push("/dashboard/reports/trending")}
+            >
+              Latest Insights
+            </Button>
+          </div>
+        </div>
+      </section>
 
       {/* ===== WHY COHERENT MARKET INSIGHTS ===== */}
       <section className="border-t bg-gradient-to-b from-secondary to-background py-16">
