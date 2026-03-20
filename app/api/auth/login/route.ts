@@ -1,7 +1,20 @@
 import { NextResponse } from "next/server"
-import { setSession } from "@/lib/auth"
 import { query } from "@/lib/db"
 import crypto from "crypto"
+
+const SESSION_COOKIE = "iv_session"
+
+function buildSessionResponse(data: { uid: number; name: string; email: string; urole: string }) {
+  const res = NextResponse.json({ success: true })
+  res.cookies.set(SESSION_COOKIE, JSON.stringify(data), {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    path: "/",
+    maxAge: 60 * 60 * 24 * 7,
+  })
+  return res
+}
 
 export async function POST(request: Request) {
   try {
@@ -17,34 +30,34 @@ export async function POST(request: Request) {
     // Hash password with MD5 (matching PHP implementation)
     const hashedPassword = crypto.createHash("md5").update(password).digest("hex")
 
-    // Try database query first
-    const result = await query(
-      'SELECT userid, "Name", email, "Role" FROM "SubScribc_Users_new" WHERE email = $1 AND upass = $2',
-      [email, hashedPassword]
-    )
+    // Try database query if users table exists
+    try {
+      const result = await query(
+        'SELECT userid, "Name", email, "Role" FROM "SubScribc_Users_new" WHERE email = $1 AND upass = $2',
+        [email, hashedPassword]
+      )
 
-    if (result.rows.length > 0) {
-      const user = result.rows[0]
-      await setSession({
-        uid: user.userid,
-        name: user.Name,
-        email: user.email,
-        urole: user.Role,
-      })
-      return NextResponse.json({ success: true })
+      if (result.rows.length > 0) {
+        const user = result.rows[0]
+        return buildSessionResponse({
+          uid: user.userid,
+          name: user.Name,
+          email: user.email,
+          urole: user.Role,
+        })
+      }
+    } catch {
+      // Users table doesn't exist yet — fall through to demo login
     }
 
-    // Fallback mock login for development (remove when DB is connected)
-    if (!process.env.DATABASE_URL) {
-      if (email === "demo@insightvault.com" && password === "demo123") {
-        await setSession({
-          uid: 1,
-          name: "Demo User",
-          email: "demo@insightvault.com",
-          urole: "subscriber",
-        })
-        return NextResponse.json({ success: true })
-      }
+    // Demo login (works regardless of DB state)
+    if (email === "demo@insightvault.com" && password === "demo123") {
+      return buildSessionResponse({
+        uid: 1,
+        name: "Demo User",
+        email: "demo@insightvault.com",
+        urole: "subscriber",
+      })
     }
 
     return NextResponse.json(
