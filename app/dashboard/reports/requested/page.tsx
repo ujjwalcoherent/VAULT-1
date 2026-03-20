@@ -13,7 +13,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
-import { ClipboardList, ArrowRight } from "lucide-react"
+import { ClipboardList, ArrowRight, Trash2 } from "lucide-react"
 
 interface RequestedReport {
   reptid: number
@@ -26,21 +26,16 @@ export default function RequestedReportsPage() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    async function fetchReports() {
-      try {
-        const res = await fetch("/api/reports/requested")
-        if (res.ok) {
-          const data = await res.json()
-          setReports(data.reports || [])
-        }
-      } catch {
-        // Empty
-      } finally {
-        setLoading(false)
-      }
-    }
-    fetchReports()
+    const stored = JSON.parse(localStorage.getItem("requestedReports") || "[]")
+    setReports(stored)
+    setLoading(false)
   }, [])
+
+  function removeReport(reptid: number) {
+    const updated = reports.filter((r) => r.reptid !== reptid)
+    setReports(updated)
+    localStorage.setItem("requestedReports", JSON.stringify(updated))
+  }
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 lg:px-8">
@@ -84,11 +79,21 @@ export default function RequestedReportsPage() {
                     {report.downdate}
                   </TableCell>
                   <TableCell className="text-right">
-                    <Button asChild variant="ghost" size="sm">
-                      <Link href={`/dashboard/reports/${report.reptid}`}>
-                        <ArrowRight className="size-4" />
-                      </Link>
-                    </Button>
+                    <div className="flex items-center justify-end gap-1">
+                      <Button asChild variant="ghost" size="sm">
+                        <Link href={`/dashboard/reports/${report.reptid}`}>
+                          <ArrowRight className="size-4" />
+                        </Link>
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => removeReport(report.reptid)}
+                        className="text-muted-foreground hover:text-red-500"
+                      >
+                        <Trash2 className="size-4" />
+                      </Button>
+                    </div>
                   </TableCell>
                 </TableRow>
               ))}

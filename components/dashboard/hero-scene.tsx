@@ -20,8 +20,8 @@ export function HeroScene() {
     renderer.setClearColor(0x000000, 0)
     container.appendChild(renderer.domElement)
 
-    const accentColor = new THREE.Color(0xc97a2a)
-    const secondaryColor = new THREE.Color(0xe8a849)
+    const accentColor = new THREE.Color(0x14b8a6)
+    const secondaryColor = new THREE.Color(0x22d3ee)
 
     // === CENTRAL GLOBE (positioned at center of viewport) ===
     const globeGeometry = new THREE.IcosahedronGeometry(9, 3)

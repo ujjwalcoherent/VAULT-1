@@ -164,7 +164,7 @@ export default function ReportDetailPage() {
         <ArrowLeft className="size-4" /> Back to Reports
       </Button>
 
-      {/* Header */}
+      {/* Header + Metadata */}
       <div className="mb-8">
         <div className="mb-3 flex flex-wrap items-center gap-2">
           <Badge variant="secondary">{catName}</Badge>
@@ -180,41 +180,70 @@ export default function ReportDetailPage() {
         {report.newssubject && report.newssubject !== report.keyword && (
           <p className="mt-2 text-sm text-muted-foreground">{report.newssubject}</p>
         )}
-      </div>
+        <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
+          <span className="inline-flex items-center gap-1.5">
+            <Calendar className="size-4 text-accent" />
+            {new Date(report.createddate).toLocaleDateString()}
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <BarChart3 className="size-4 text-accent" />
+            {report.forcastyear}
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <Building2 className="size-4 text-accent" />
+            {catName}
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <FileText className="size-4 text-accent" />
+            {report.no_pages ? `${report.no_pages} pages` : "N/A"}
+          </span>
+        </div>
 
-      {/* Metadata */}
-      <Card className="mb-8">
-        <CardContent className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="flex items-center gap-3">
-            <Calendar className="size-5 text-accent" />
-            <div>
-              <p className="text-xs text-muted-foreground">Published</p>
-              <p className="text-sm font-semibold">{new Date(report.createddate).toLocaleDateString()}</p>
+        {/* Action buttons */}
+        <div className="mt-5">
+          {!checkingPdf && hasPdf && (
+            <Button
+              size="lg"
+              className="gap-2"
+              onClick={() => router.push(`/dashboard/reports/${report.newsid}/view`)}
+            >
+              <Eye className="size-4" />
+              View Report PDF
+            </Button>
+          )}
+          {!checkingPdf && !hasPdf && !requested && (
+            <Button
+              size="lg"
+              className="gap-2"
+              disabled={requesting}
+              onClick={() => {
+                setRequesting(true)
+                const stored = JSON.parse(localStorage.getItem("requestedReports") || "[]")
+                const already = stored.some((r: { reptid: number }) => r.reptid === report.newsid)
+                if (!already) {
+                  stored.push({
+                    reptid: report.newsid,
+                    reptitle: report.keyword,
+                    downdate: new Date().toLocaleString(),
+                  })
+                  localStorage.setItem("requestedReports", JSON.stringify(stored))
+                }
+                setRequested(true)
+                setRequesting(false)
+              }}
+            >
+              <Send className="size-4" />
+              {requesting ? "Sending..." : "Request for Report"}
+            </Button>
+          )}
+          {!checkingPdf && !hasPdf && requested && (
+            <div className="inline-flex items-center gap-2 text-sm font-medium text-green-600">
+              <CheckCircle className="size-5" />
+              Request Submitted
             </div>
-          </div>
-          <div className="flex items-center gap-3">
-            <BarChart3 className="size-5 text-accent" />
-            <div>
-              <p className="text-xs text-muted-foreground">Forecast</p>
-              <p className="text-sm font-semibold">{report.forcastyear}</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-3">
-            <Building2 className="size-5 text-accent" />
-            <div>
-              <p className="text-xs text-muted-foreground">Category</p>
-              <p className="text-sm font-semibold">{catName}</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-3">
-            <FileText className="size-5 text-accent" />
-            <div>
-              <p className="text-xs text-muted-foreground">Pages</p>
-              <p className="text-sm font-semibold">{report.no_pages || "N/A"}</p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+          )}
+        </div>
+      </div>
 
       {/* Summary */}
       {report.summary && (
@@ -260,83 +289,6 @@ export default function ReportDetailPage() {
         </Card>
       )}
 
-      {/* View Report PDF — only show if PDF exists */}
-      {!checkingPdf && hasPdf && (
-        <Card>
-          <CardContent className="flex flex-col items-center gap-4 py-8 text-center">
-            <Eye className="size-10 text-accent" />
-            <div>
-              <h3 className="font-serif text-lg font-bold">View Full Report</h3>
-              <p className="mt-1 text-sm text-muted-foreground">
-                Open the full report in our built-in PDF viewer.
-              </p>
-            </div>
-            <Button
-              size="lg"
-              className="gap-2"
-              onClick={() => router.push(`/dashboard/reports/${report.newsid}/view`)}
-            >
-              <Eye className="size-4" />
-              View Report PDF
-            </Button>
-          </CardContent>
-        </Card>
-      )}
-
-      {/* Request Report — show when no PDF */}
-      {!checkingPdf && !hasPdf && (
-        <Card>
-          <CardContent className="flex flex-col items-center gap-4 py-8 text-center">
-            {requested ? (
-              <>
-                <CheckCircle className="size-10 text-green-500" />
-                <div>
-                  <h3 className="font-serif text-lg font-bold">Request Submitted</h3>
-                  <p className="mt-1 text-sm text-muted-foreground">
-                    Your request has been sent. Our team will notify you when the report is ready.
-                  </p>
-                </div>
-              </>
-            ) : (
-              <>
-                <Send className="size-10 text-accent" />
-                <div>
-                  <h3 className="font-serif text-lg font-bold">Request This Report</h3>
-                  <p className="mt-1 max-w-md text-sm text-muted-foreground">
-                    The full PDF is not available yet. Submit a request and our team will prepare it for you.
-                  </p>
-                </div>
-                <Button
-                  size="lg"
-                  className="gap-2"
-                  disabled={requesting}
-                  onClick={async () => {
-                    setRequesting(true)
-                    try {
-                      await fetch("/api/reports/notify", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({
-                          reportId: report.newsid,
-                          reportTitle: report.keyword,
-                          type: "request",
-                        }),
-                      })
-                    } catch {
-                      // still show success to user
-                    }
-                    setRequested(true)
-                    setRequesting(false)
-                  }}
-                >
-                  <Send className="size-4" />
-                  {requesting ? "Sending..." : "Request for Report"}
-                </Button>
-              </>
-            )}
-          </CardContent>
-        </Card>
-      )}
     </div>
   )
 }
