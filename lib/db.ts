@@ -11,8 +11,12 @@ function getPool(): Pool | null {
     pool = new Pool({
       connectionString: process.env.DATABASE_URL,
       ssl: { rejectUnauthorized: false },
-      max: 10,
-      idleTimeoutMillis: 30000,
+      max: 5,
+      idleTimeoutMillis: 60000,
+      connectionTimeoutMillis: 10000,
+    })
+    pool.on("error", () => {
+      pool = null
     })
   }
   return pool
@@ -24,7 +28,19 @@ export async function query(text: string, params?: unknown[]) {
     console.warn("DATABASE_URL not set. Using mock data.")
     return { rows: [] }
   }
-  return p.query(text, params)
+
+  // Retry once on connection failure
+  try {
+    return await p.query(text, params)
+  } catch (error: unknown) {
+    const msg = error instanceof Error ? error.message : ""
+    if (msg.includes("timeout") || msg.includes("ECONNREFUSED") || msg.includes("terminated")) {
+      pool = null
+      const p2 = getPool()
+      if (p2) return await p2.query(text, params)
+    }
+    throw error
+  }
 }
 
 export async function testConnection() {
