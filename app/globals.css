@@ -126,3 +126,257 @@
   }
 }
 
+/* ───────────── Report Content (DB summaries & dynamic sections) ───────────── */
+
+.report-content {
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--muted-foreground);
+}
+
+/* ── Paragraphs ── */
+.report-content p {
+  margin-bottom: 14px;
+}
+
+/* ── Bold / Strong as inline section headings ── */
+.report-content strong,
+.report-content b {
+  color: var(--foreground);
+  font-weight: 600;
+}
+
+/* Bold text that is the only child of a <p> → treat as a sub-heading */
+.report-content p > strong:only-child,
+.report-content p > b:only-child {
+  display: block;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--foreground);
+  margin-top: 24px;
+  margin-bottom: 6px;
+  padding: 8px 12px;
+  background: var(--secondary);
+  border-left: 3px solid var(--accent);
+  border-radius: 4px;
+}
+
+/* ── Headings ── */
+.report-content h2 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--foreground);
+  margin: 28px 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--accent);
+}
+.report-content h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--foreground);
+  margin: 24px 0 10px;
+  padding: 8px 12px;
+  background: var(--secondary);
+  border-left: 3px solid var(--accent);
+  border-radius: 4px;
+}
+.report-content h4 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--foreground);
+  margin: 20px 0 8px;
+}
+
+/* ── Lists (top-level) ── */
+.report-content ul,
+.report-content ol {
+  margin: 10px 0 16px 0;
+  padding: 0;
+  list-style: none;
+}
+.report-content > ul,
+.report-content > ol {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* ── List Items ── */
+.report-content li {
+  position: relative;
+  padding: 6px 10px 6px 28px;
+  border-radius: 6px;
+  transition: background-color 0.15s;
+}
+.report-content li:hover {
+  background: var(--secondary);
+}
+.report-content li::before {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 14px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+/* ── Nested Lists (child items like "U.S.", "Germany") ── */
+.report-content li > ul,
+.report-content li > ol {
+  margin: 4px 0 4px 8px;
+  padding-left: 0;
+  border-left: 2px solid var(--border);
+}
+.report-content li > ul > li,
+.report-content li > ol > li {
+  padding: 4px 10px 4px 24px;
+  font-size: 13px;
+  color: var(--muted-foreground);
+}
+.report-content li > ul > li::before,
+.report-content li > ol > li::before {
+  width: 5px;
+  height: 5px;
+  top: 12px;
+  left: 8px;
+  background: var(--border);
+  border: 1.5px solid var(--accent);
+}
+
+/* 3rd nesting level */
+.report-content li > ul > li > ul > li,
+.report-content li > ol > li > ol > li {
+  padding: 3px 10px 3px 20px;
+  font-size: 12.5px;
+}
+.report-content li > ul > li > ul > li::before,
+.report-content li > ol > li > ol > li::before {
+  width: 4px;
+  height: 4px;
+  top: 11px;
+  left: 6px;
+  border-radius: 1px;
+  background: var(--muted-foreground);
+  border: none;
+}
+
+/* ── Ordered lists get numbers ── */
+.report-content ol {
+  counter-reset: rc-ol;
+}
+.report-content ol > li {
+  counter-increment: rc-ol;
+}
+.report-content ol > li::before {
+  content: counter(rc-ol);
+  width: auto;
+  height: auto;
+  background: none;
+  border-radius: 0;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+  top: 7px;
+  left: 8px;
+}
+
+/* ── Links ── */
+.report-content a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+  border-bottom: 1px dashed var(--accent);
+  transition: border-color 0.15s, opacity 0.15s;
+}
+.report-content a:hover {
+  opacity: 0.8;
+  border-bottom-style: solid;
+}
+
+/* Key player links rendered as inline chips */
+.report-content li > a:only-child {
+  display: inline-block;
+  padding: 2px 0;
+}
+
+/* ── Tables ── */
+.report-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 13px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.report-content table td,
+.report-content table th {
+  border: 1px solid var(--border);
+  padding: 10px 14px;
+  vertical-align: top;
+  text-align: left;
+}
+.report-content table tr:first-child td,
+.report-content table th {
+  background: var(--secondary);
+  font-weight: 600;
+  color: var(--foreground);
+}
+.report-content table tr:nth-child(even) {
+  background: color-mix(in oklch, var(--secondary), transparent 50%);
+}
+
+/* ── Media (images / SVG) ── */
+.report-content svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 16px auto;
+  overflow: hidden;
+  border-radius: 8px;
+}
+.report-content img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 16px auto;
+  border-radius: 8px;
+}
+
+/* ── Testimonial scroll animation (sidebar) ── */
+.testimonial-scroll-wrapper {
+  height: 100%;
+  overflow: hidden;
+}
+.testimonial-scroll {
+  animation: testimonialScroll 120s linear infinite;
+}
+.testimonial-scroll:hover {
+  animation-play-state: paused;
+}
+@keyframes testimonialScroll {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+
+/* Thin scrollbar for sidebar */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+.scrollbar-thin::-webkit-scrollbar {
+  width: 4px;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: var(--muted-foreground);
+}
+
