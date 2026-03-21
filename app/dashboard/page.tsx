@@ -127,7 +127,7 @@ export default function DashboardPage() {
                 </div>
 
                 <h1 className="font-serif text-4xl font-bold leading-[1.1] tracking-tight text-white sm:text-5xl lg:text-6xl">
-                  Coherent
+                  Coherent&apos;s
                   <br />
                   <span className="bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 bg-clip-text text-transparent">
                     InsightVault
