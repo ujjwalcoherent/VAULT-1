@@ -417,7 +417,7 @@ export default function DashboardPage() {
             <Button
               variant="outline"
               className="rounded-md border-white bg-white px-8 py-2 text-sm font-semibold text-[#0a1628] hover:bg-white/90"
-              onClick={() => router.push("/dashboard/reports/trending")}
+              onClick={() => window.open("https://www.coherentmarketinsights.com/latest-insights", "_blank")}
             >
               Latest Insights
             </Button>
