@@ -1,19 +1,22 @@
 import { NextResponse } from "next/server"
 import { query } from "@/lib/db"
-import { readdirSync } from "fs"
-import { join } from "path"
 
-/** Get keywords of locally available PDFs */
+/** Hardcoded list of locally available PDF keywords (Vercel can't use readdirSync on public/) */
+const LOCAL_PDF_KEYWORDS = [
+  "3D Cell Culture Market",
+  "3D Printed Medical Devices Market",
+  "4-tert-Amylphenol Market",
+  "5G Chipset Market",
+  "A2P _Application to Person_ SMS Market",
+  "ACE Equipment Coatings Market",
+  "AFP-ATL Machines Market",
+  "AIOps Platform Market",
+  "APAC Generic Oncology Sterile Injectable Market",
+  "ASEAN Automotive Aftermarket",
+]
+
 function getLocalPdfKeywords(): string[] {
-  try {
-    const dir = join(process.cwd(), "public", "pdffiles")
-    const files = readdirSync(dir)
-    return files
-      .filter((f) => f.endsWith(".pdf"))
-      .map((f) => f.replace(".pdf", ""))
-  } catch {
-    return []
-  }
+  return LOCAL_PDF_KEYWORDS
 }
 
 export async function GET(request: Request) {
