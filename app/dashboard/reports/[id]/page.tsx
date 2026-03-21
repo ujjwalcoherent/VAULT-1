@@ -373,17 +373,27 @@ export default function ReportDetailPage() {
                   Our Clientele
                 </CardTitle>
               </CardHeader>
-              <CardContent className="grid grid-cols-3 gap-1.5 pt-0">
-                {CLIENT_LOGOS.map((file, i) => (
-                  <div key={i} className="flex items-center justify-center rounded-md border bg-white p-1.5">
-                    <img
-                      src={`https://www.coherentmarketinsights.com/images/clients/${file}`}
-                      alt={file.replace(/\.\w+$/, "").replace(/[_-]/g, " ")}
-                      loading="lazy"
-                      className="h-7 object-contain"
-                    />
-                  </div>
-                ))}
+              <CardContent className="space-y-3 pt-0">
+                <div className="grid grid-cols-3 gap-1.5">
+                  {CLIENT_LOGOS.slice(0, 12).map((file, i) => (
+                    <div key={i} className="flex items-center justify-center rounded-md border bg-white p-1.5">
+                      <img
+                        src={`https://www.coherentmarketinsights.com/images/clients/${file}`}
+                        alt={file.replace(/\.\w+$/, "").replace(/[_-]/g, " ")}
+                        loading="lazy"
+                        className="h-7 object-contain"
+                      />
+                    </div>
+                  ))}
+                </div>
+                <a
+                  href="https://www.coherentmarketinsights.com/trusted-by"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block rounded-md bg-teal-600 px-4 py-2 text-center text-xs font-semibold text-white transition-colors hover:bg-teal-700"
+                >
+                  View All Our Clients &rarr;
+                </a>
               </CardContent>
             </Card>
 
