@@ -51,11 +51,12 @@ export async function POST(request: Request) {
     }
 
     // Demo login (works regardless of DB state)
-    if (email === "demo@insightvault.com" && password === "demo123") {
+    const demoEmails = ["demo@insightvault.com", "demo@coherentmi.com"]
+    if (demoEmails.includes(email) && password === "demo123") {
       return buildSessionResponse({
         uid: 1,
         name: "Demo User",
-        email: "demo@insightvault.com",
+        email,
         urole: "subscriber",
       })
     }
