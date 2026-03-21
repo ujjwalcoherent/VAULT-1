@@ -59,8 +59,7 @@ export default function DashboardPage() {
           setToBePublished(data.toBePublished || [])
         }
         if (statsRes.ok) {
-          const stats = await statsRes.json()
-          setTotalReports(stats.total || 9000)
+          await statsRes.json()
         }
       } catch {
         setTrendingReports([])
