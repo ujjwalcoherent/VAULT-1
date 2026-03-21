@@ -79,10 +79,10 @@ export function DashboardFooter() {
             <div>
               <h4 className="mb-4 text-sm font-bold text-white">Menu</h4>
               <ul className="space-y-2.5 text-xs">
-                <li><Link href="#" className="hover:text-accent">About Us</Link></li>
-                <li><Link href="#" className="hover:text-accent">Industries</Link></li>
-                <li><Link href="#" className="hover:text-accent">Services</Link></li>
-                <li><Link href="#" className="hover:text-accent">Contact Us</Link></li>
+                <li><a href="https://www.coherentmarketinsights.com/aboutus" target="_blank" rel="noopener noreferrer" className="hover:text-accent">About Us</a></li>
+                <li><a href="https://www.coherentmarketinsights.com/industries" target="_blank" rel="noopener noreferrer" className="hover:text-accent">Industries</a></li>
+                <li><a href="https://www.coherentmarketinsights.com/services" target="_blank" rel="noopener noreferrer" className="hover:text-accent">Services</a></li>
+                <li><a href="https://www.coherentmarketinsights.com/contact-us" target="_blank" rel="noopener noreferrer" className="hover:text-accent">Contact Us</a></li>
               </ul>
             </div>
 
