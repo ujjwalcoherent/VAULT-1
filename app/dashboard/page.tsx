@@ -333,6 +333,44 @@ export default function DashboardPage() {
         )}
       </div>
 
+      {/* ===== EXISTING CLIENTELE ===== */}
+      <section className="bg-white px-6 py-14 lg:px-12">
+        <div className="mx-auto max-w-6xl">
+          <div className="grid items-center gap-8 md:grid-cols-2">
+            <div>
+              <div className="mb-4 flex items-center gap-4">
+                <div className="h-px flex-1 bg-slate-300" />
+                <h2 className="whitespace-nowrap font-serif text-xl font-bold uppercase tracking-widest text-[#0a1628] md:text-2xl">
+                  Existing Clientele
+                </h2>
+                <div className="h-px flex-1 bg-slate-300" />
+              </div>
+              <p className="text-base text-slate-600">
+                Created billion dollars of revenue impact on thousands of clients.
+              </p>
+              <a
+                href="https://www.coherentmarketinsights.com/trusted-by"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-3 inline-block text-sm font-semibold text-teal-600 hover:text-teal-700 hover:underline"
+              >
+                View All Our Clients &rarr;
+              </a>
+            </div>
+            <div className="text-center">
+              <img
+                src="https://www.coherentmarketinsights.com/allupimg/image/existing-clientele.webp"
+                alt="Existing Clients Logo"
+                width={450}
+                height={200}
+                loading="lazy"
+                className="mx-auto max-w-full"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ===== KEY STATS + DISCOVER LATEST INSIGHTS ===== */}
       <section className="overflow-hidden">
         <div className="grid lg:grid-cols-[1fr_auto]">
