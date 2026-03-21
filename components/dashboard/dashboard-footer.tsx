@@ -90,10 +90,7 @@ export function DashboardFooter() {
             <div>
               <h4 className="mb-4 text-sm font-bold text-white">Reader Club</h4>
               <ul className="space-y-2.5 text-xs">
-                <li><Link href="#" className="hover:text-accent">Latest Insights</Link></li>
-                <li><Link href="#" className="hover:text-accent">Press Release</Link></li>
-                <li><Link href="#" className="hover:text-accent">Infographics</Link></li>
-                <li><Link href="#" className="hover:text-accent">Blogs</Link></li>
+<li><Link href="#" className="hover:text-accent">Blogs</Link></li>
                 <li><Link href="#" className="hover:text-accent">Guest Post Placement</Link></li>
                 <li><Link href="#" className="hover:text-accent">News</Link></li>
                 <li><Link href="#" className="hover:text-accent">Careers</Link></li>
