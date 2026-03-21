@@ -185,13 +185,23 @@ export default function DashboardPage() {
                   </div>
                 </div>
 
-                <a href="https://www.coherentmarketinsights.com/media-coverage" target="_blank" rel="noopener noreferrer" className="mt-3 block rounded-2xl border border-white/[0.08] bg-white/[0.04] p-4 backdrop-blur-md transition-all hover:border-teal-500/30 hover:bg-white/[0.08]">
-                  <p className="mb-3 text-center text-xs font-semibold uppercase tracking-wider text-slate-400">Media Coverage</p>
-                  <div className="flex items-center justify-between gap-2">
-                    <img src="https://www.coherentmarketinsights.com/mediaimg/seekingalpha.jpg" alt="Seeking Alpha" className="h-7 rounded object-contain" loading="lazy" />
-                    <img src="https://www.coherentmarketinsights.com/mediaimg/forbes.jpg" alt="Forbes" className="h-7 rounded object-contain" loading="lazy" />
-                    <img src="https://www.coherentmarketinsights.com/mediaimg/yahoo-news.png" alt="Yahoo News" className="h-7 rounded object-contain" loading="lazy" />
-                    <img src="https://www.coherentmarketinsights.com/mediaimg/bbc1.jpg" alt="BBC" className="h-7 rounded object-contain" loading="lazy" />
+                <a href="https://www.coherentmarketinsights.com/media-coverage" target="_blank" rel="noopener noreferrer" className="mt-3 block rounded-2xl border border-white/[0.08] bg-white/[0.04] px-5 py-4 backdrop-blur-md transition-all hover:border-teal-500/30 hover:bg-white/[0.08]">
+                  <div className="mb-3 flex items-center gap-3">
+                    <div className="h-px flex-1 bg-gradient-to-r from-transparent to-teal-500/40" />
+                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-teal-400">Media Coverage</p>
+                    <div className="h-px flex-1 bg-gradient-to-l from-transparent to-teal-500/40" />
+                  </div>
+                  <div className="grid grid-cols-4 gap-2">
+                    {[
+                      { src: "https://www.coherentmarketinsights.com/mediaimg/seekingalpha.jpg", alt: "Seeking Alpha" },
+                      { src: "https://www.coherentmarketinsights.com/mediaimg/forbes.jpg", alt: "Forbes" },
+                      { src: "https://www.coherentmarketinsights.com/mediaimg/yahoo-news.png", alt: "Yahoo News" },
+                      { src: "https://www.coherentmarketinsights.com/mediaimg/bbc1.jpg", alt: "BBC" },
+                    ].map((m, i) => (
+                      <div key={i} className="flex items-center justify-center rounded-lg bg-white/[0.06] p-2 transition-colors hover:bg-white/[0.12]">
+                        <img src={m.src} alt={m.alt} className="h-8 w-full object-contain" loading="lazy" />
+                      </div>
+                    ))}
                   </div>
                 </a>
               </div>
