@@ -188,10 +188,10 @@ export default function DashboardPage() {
                 <a href="https://www.coherentmarketinsights.com/media-coverage" target="_blank" rel="noopener noreferrer" className="mt-3 block rounded-2xl border border-white/[0.08] bg-white/[0.04] p-4 backdrop-blur-md transition-all hover:border-teal-500/30 hover:bg-white/[0.08]">
                   <p className="mb-3 text-center text-xs font-semibold uppercase tracking-wider text-slate-400">Media Coverage</p>
                   <div className="flex items-center justify-between gap-2">
-                    <img src="https://www.coherentmarketinsights.com/images/optcmihome-img/seekingalpha.webp" alt="Seeking Alpha" className="h-6 object-contain opacity-80 brightness-200" loading="lazy" />
-                    <img src="https://www.coherentmarketinsights.com/images/optcmihome-img/forbes.webp" alt="Forbes" className="h-6 object-contain opacity-80 brightness-200" loading="lazy" />
-                    <img src="https://www.coherentmarketinsights.com/images/optcmihome-img/yahoo-finance.webp" alt="Yahoo Finance" className="h-6 object-contain opacity-80 brightness-200" loading="lazy" />
-                    <img src="https://www.coherentmarketinsights.com/images/optcmihome-img/bbc.webp" alt="BBC" className="h-6 object-contain opacity-80 brightness-200" loading="lazy" />
+                    <img src="https://www.coherentmarketinsights.com/mediaimg/seekingalpha.jpg" alt="Seeking Alpha" className="h-7 rounded object-contain" loading="lazy" />
+                    <img src="https://www.coherentmarketinsights.com/mediaimg/forbes.jpg" alt="Forbes" className="h-7 rounded object-contain" loading="lazy" />
+                    <img src="https://www.coherentmarketinsights.com/mediaimg/yahoo-news.png" alt="Yahoo News" className="h-7 rounded object-contain" loading="lazy" />
+                    <img src="https://www.coherentmarketinsights.com/mediaimg/bbc1.jpg" alt="BBC" className="h-7 rounded object-contain" loading="lazy" />
                   </div>
                 </a>
               </div>
