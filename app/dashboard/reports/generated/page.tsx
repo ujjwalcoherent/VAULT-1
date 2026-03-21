@@ -6,6 +6,7 @@ import { ArrowLeft, Calendar, BarChart3, FileText, Send } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { AiWhitepaper } from "@/components/dashboard/ai-whitepaper"
+import { ReportSidebar } from "@/components/dashboard/report-sidebar"
 
 function formatTitle(query: string) {
   return query
@@ -71,8 +72,13 @@ function GeneratedReportContent() {
         </div>
       </div>
 
-      {/* Report Content */}
-      <AiWhitepaper topic={q} mode="full" />
+      {/* Content + Sidebar grid */}
+      <div className="grid gap-6 xl:grid-cols-[1fr_280px]">
+        <div>
+          <AiWhitepaper topic={q} mode="full" />
+        </div>
+        <ReportSidebar />
+      </div>
     </div>
   )
 }

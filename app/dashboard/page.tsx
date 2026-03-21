@@ -165,8 +165,8 @@ export default function DashboardPage() {
                 <div className="grid grid-cols-2 gap-3">
                   <div className="group rounded-2xl border border-white/[0.08] bg-white/[0.04] p-5 backdrop-blur-md transition-all hover:border-teal-500/30 hover:bg-white/[0.08]">
                     <BarChart3 className="mb-3 size-7 text-teal-400 transition-transform group-hover:scale-110" />
-                    <p className="text-2xl font-bold text-white">2,500+</p>
-                    <p className="mt-0.5 text-xs text-slate-500">Insights & Newsletters Per Year</p>
+                    <p className="text-2xl font-bold text-white">25,000+</p>
+                    <p className="mt-0.5 text-xs text-slate-500">Reports</p>
                   </div>
                   <div className="group rounded-2xl border border-white/[0.08] bg-white/[0.04] p-5 backdrop-blur-md transition-all hover:border-cyan-500/30 hover:bg-white/[0.08]">
                     <Globe className="mb-3 size-7 text-cyan-400 transition-transform group-hover:scale-110" />
