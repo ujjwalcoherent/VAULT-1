@@ -6,7 +6,6 @@ import { ArrowLeft, Search, FileText, ChevronLeft, ChevronRight } from "lucide-r
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { getCategoryName } from "@/lib/data"
-import { AIInsights } from "@/components/dashboard/ai-insights"
 
 interface SearchResult {
   newsid: number
@@ -27,32 +26,39 @@ function SearchContent() {
   const [total, setTotal] = useState(0)
   const [page, setPage] = useState(1)
   const [loading, setLoading] = useState(true)
-  const [showAi, setShowAi] = useState(false)
+  const [noDbResults, setNoDbResults] = useState(false)
   const limit = 20
 
   useEffect(() => {
     if (!q) return
     setLoading(true)
-    setShowAi(false)
+    setNoDbResults(false)
     const catParam = catId ? `&catId=${catId}` : ""
     fetch(`/api/reports/search/results?q=${encodeURIComponent(q)}${catParam}&page=${page}&limit=${limit}`)
       .then((res) => res.json())
       .then((data) => {
         setResults(data.reports || [])
         setTotal(data.total || 0)
-        // If no reports found, automatically show AI insights
         if ((data.total || 0) === 0) {
-          setShowAi(true)
+          setNoDbResults(true)
         }
       })
       .catch(() => {
         setResults([])
-        setShowAi(true)
+        setNoDbResults(true)
       })
       .finally(() => setLoading(false))
   }, [q, catId, page])
 
   const totalPages = Math.ceil(total / limit)
+
+  function formatQueryAsTitle(query: string) {
+    return query
+      .split(" ")
+      .map((w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
+      .join(" ")
+      + (query.toLowerCase().includes("market") ? "" : " Market")
+  }
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 lg:px-8">
@@ -67,23 +73,49 @@ function SearchContent() {
             Search Results
           </h1>
         </div>
-        {!showAi && (
-          <p className="mt-1 text-sm text-muted-foreground">
-            {loading ? "Searching..." : `${total} report${total !== 1 ? "s" : ""} found for "${q}"`}
-          </p>
-        )}
+        <p className="mt-1 text-sm text-muted-foreground">
+          {loading
+            ? "Searching..."
+            : noDbResults
+              ? `1 report found for "${q}"`
+              : `${total} report${total !== 1 ? "s" : ""} found for "${q}"`}
+        </p>
       </div>
 
       {loading ? (
         <div className="flex items-center justify-center py-20">
           <div className="size-8 animate-spin rounded-full border-4 border-accent border-t-transparent" />
         </div>
-      ) : showAi ? (
-        /* No DB results — fallback to AI-generated insights */
-        <AIInsights query={q} />
       ) : (
         <>
           <div className="space-y-3">
+            {/* Show query as a report card when no DB results */}
+            {noDbResults && (
+              <button
+                onClick={() => router.push(`/dashboard/reports/generated?q=${encodeURIComponent(q)}`)}
+                className="flex w-full items-start gap-4 rounded-xl border bg-card p-4 text-left transition-colors hover:bg-secondary"
+              >
+                <span className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-lg bg-accent/10 text-xs font-bold text-accent">
+                  <FileText className="size-4" />
+                </span>
+                <div className="min-w-0 flex-1">
+                  <h3 className="font-medium leading-snug text-foreground">
+                    {formatQueryAsTitle(q)}
+                  </h3>
+                  <div className="mt-2 flex flex-wrap items-center gap-2">
+                    <Badge className="bg-accent/10 text-accent text-xs">Published</Badge>
+                    <span className="text-xs text-muted-foreground">
+                      Forecast: 2024–2030
+                    </span>
+                    <span className="text-xs text-muted-foreground">
+                      {new Date().toLocaleDateString()}
+                    </span>
+                  </div>
+                </div>
+              </button>
+            )}
+
+            {/* DB results */}
             {results.map((report, idx) => (
               <button
                 key={report.newsid}

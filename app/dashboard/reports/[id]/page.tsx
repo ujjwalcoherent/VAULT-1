@@ -2,8 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useParams, useRouter } from "next/navigation"
-import { ArrowLeft, Eye, Calendar, BarChart3, Building2, FileText, Send, CheckCircle, ShieldCheck, Users, Timer, Target, Award, BookOpen, Quote } from "lucide-react"
-import Link from "next/link"
+import { ArrowLeft, Eye, Calendar, BarChart3, Building2, FileText, Send, CheckCircle, ShieldCheck, Users, Timer, Target, Award, Quote } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -11,6 +10,7 @@ import { SectionHeader } from "@/components/section-header"
 import { getCategoryName } from "@/lib/data"
 import { CLIENT_LOGOS } from "@/lib/clients"
 import { TESTIMONIALS } from "@/lib/testimonials"
+import { AiWhitepaper } from "@/components/dashboard/ai-whitepaper"
 
 interface ReportData {
   newsid: number
@@ -118,74 +118,6 @@ export default function ReportDetailPage() {
 
   return (
     <div className="mx-auto max-w-[1400px] px-4 py-8 lg:px-8">
-      {/* Report content styles */}
-      <style jsx global>{`
-        .report-content {
-          font-size: 14px;
-          line-height: 1.75;
-          color: var(--muted-foreground);
-        }
-        .report-content p {
-          margin-bottom: 12px;
-        }
-        .report-content strong, .report-content b {
-          color: var(--foreground);
-          font-weight: 600;
-        }
-        .report-content ul, .report-content ol {
-          margin: 8px 0 12px 20px;
-          padding: 0;
-        }
-        .report-content li {
-          margin-bottom: 6px;
-        }
-        .report-content table {
-          width: 100%;
-          border-collapse: collapse;
-          margin: 16px 0;
-          font-size: 13px;
-        }
-        .report-content table td,
-        .report-content table th {
-          border: 1px solid var(--border);
-          padding: 10px 14px;
-          vertical-align: top;
-          text-align: left;
-        }
-        .report-content table tr:first-child td,
-        .report-content table th {
-          background: var(--secondary);
-          font-weight: 600;
-          color: var(--foreground);
-        }
-        .report-content table tr:nth-child(even) {
-          background: var(--secondary);
-        }
-        .report-content a {
-          color: var(--accent);
-          text-decoration: underline;
-        }
-        .report-content h2, .report-content h3, .report-content h4 {
-          color: var(--foreground);
-          font-weight: 700;
-          margin: 20px 0 10px;
-        }
-        .testimonial-scroll-wrapper {
-          height: 100%;
-          overflow: hidden;
-        }
-        .testimonial-scroll {
-          animation: testimonialScroll 120s linear infinite;
-        }
-        .testimonial-scroll:hover {
-          animation-play-state: paused;
-        }
-        @keyframes testimonialScroll {
-          0% { transform: translateY(0); }
-          100% { transform: translateY(-50%); }
-        }
-      `}</style>
-
       <Button variant="ghost" onClick={() => router.back()} className="mb-6 gap-2">
         <ArrowLeft className="size-4" /> Back to Reports
       </Button>
@@ -275,8 +207,8 @@ export default function ReportDetailPage() {
       <div className="grid gap-6 xl:grid-cols-[1fr_280px]">
         {/* ===== MAIN CONTENT ===== */}
         <div>
-          {/* Summary */}
-          {report.summary && (
+          {/* Summary — DB content or generated fallback */}
+          {report.summary ? (
             <Card className="mb-6">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 font-serif text-xl">
@@ -291,6 +223,10 @@ export default function ReportDetailPage() {
                 />
               </CardContent>
             </Card>
+          ) : sections.length === 0 ? (
+            <AiWhitepaper topic={report.keyword} mode="full" />
+          ) : (
+            <AiWhitepaper topic={report.keyword} mode="summary" />
           )}
 
           {/* Dynamic Content Sections */}

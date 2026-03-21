@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server"
 import { query } from "@/lib/db"
 
-/** Fix relative image paths to point to coherentmarketinsights.com */
+/** Fix relative image paths and constrain embedded media */
 function sanitizeHtml(html: string): string {
   if (!html) return ""
   return html
@@ -12,6 +12,11 @@ function sanitizeHtml(html: string): string {
     )
     // Add responsive styling and error handler to all images
     .replace(/<img /gi, '<img style="max-width:100%;height:auto" onerror="this.style.display=\'none\'" ')
+    // Constrain inline SVGs to prevent overflow
+    .replace(/<svg /gi, '<svg style="max-width:100%;height:auto;display:block;margin:12px auto" ')
+    // Force width/height on SVGs that have absolute pixel values causing overflow
+    .replace(/<svg([^>]*) width=["']\d{4,}["']/gi, '<svg$1 width="100%"')
+    .replace(/<svg([^>]*) height=["']\d{4,}["']/gi, '<svg$1 height="auto"')
 }
 
 export async function GET(
