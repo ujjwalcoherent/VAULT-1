@@ -185,26 +185,15 @@ export default function DashboardPage() {
                   </div>
                 </div>
 
-                <div className="mt-3 rounded-2xl border border-white/[0.08] bg-white/[0.04] p-4 backdrop-blur-md">
-                  <div className="flex items-center gap-3 text-sm">
-                    <div className="flex -space-x-2">
-                      {[
-                        { letter: "C", bg: "bg-teal-700" },
-                        { letter: "H", bg: "bg-cyan-800" },
-                        { letter: "T", bg: "bg-blue-800" },
-                        { letter: "P", bg: "bg-sky-800" },
-                      ].map(({ letter, bg }, i) => (
-                        <div key={i} className={`flex size-7 items-center justify-center rounded-full border-2 border-[#0a1628] ${bg} text-[10px] font-bold text-white`}>
-                          {letter}
-                        </div>
-                      ))}
-                    </div>
-                    <div>
-                      <p className="font-semibold text-white">Trusted by Fortune 500</p>
-                      <p className="text-[11px] text-slate-500">Chemical, Healthcare, Tech, Pharma & more</p>
-                    </div>
+                <a href="https://www.coherentmarketinsights.com/media-coverage" target="_blank" rel="noopener noreferrer" className="mt-3 block rounded-2xl border border-white/[0.08] bg-white/[0.04] p-4 backdrop-blur-md transition-all hover:border-teal-500/30 hover:bg-white/[0.08]">
+                  <p className="mb-3 text-center text-xs font-semibold uppercase tracking-wider text-slate-400">Media Coverage</p>
+                  <div className="flex items-center justify-between gap-2">
+                    <img src="https://www.coherentmarketinsights.com/images/optcmihome-img/seekingalpha.webp" alt="Seeking Alpha" className="h-6 object-contain opacity-80 brightness-200" loading="lazy" />
+                    <img src="https://www.coherentmarketinsights.com/images/optcmihome-img/forbes.webp" alt="Forbes" className="h-6 object-contain opacity-80 brightness-200" loading="lazy" />
+                    <img src="https://www.coherentmarketinsights.com/images/optcmihome-img/yahoo-finance.webp" alt="Yahoo Finance" className="h-6 object-contain opacity-80 brightness-200" loading="lazy" />
+                    <img src="https://www.coherentmarketinsights.com/images/optcmihome-img/bbc.webp" alt="BBC" className="h-6 object-contain opacity-80 brightness-200" loading="lazy" />
                   </div>
-                </div>
+                </a>
               </div>
             </div>
           </div>
