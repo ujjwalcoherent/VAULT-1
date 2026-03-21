@@ -35,7 +35,7 @@ export default function DashboardPage() {
   const [upcomingReports, setUpcomingReports] = useState<ReportData[]>([])
   const [toBePublished, setToBePublished] = useState<ReportData[]>([])
   const [loading, setLoading] = useState(true)
-  const [totalReports, setTotalReports] = useState(0)
+  const [totalReports, setTotalReports] = useState(25000)
 
   // Search state
   const [searchQuery, setSearchQuery] = useState("")
